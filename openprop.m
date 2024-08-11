@@ -53,7 +53,7 @@ disp('% See the GNU General Public License for more details.                    
 disp('%                                                                         %')
 disp('% ----------------------------------------------------------------------- %')
 
-addpath  SourceCode
+addpath("SourceCode")
 
 
 run('SourceCode/OpenPropSingle.m')

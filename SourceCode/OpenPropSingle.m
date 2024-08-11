@@ -63,14 +63,14 @@
 
 % =========================================================================
 % ========================= Initiate OpenProp ======================
+
 function OpenPropSingle
 
     clear all;
     clear global;
 
     % warning off
-    addpath ../SourceCode
-    % addpath  ./SourceCode
+    % addpath("../SourceCode")
 
 
     % =========================================================================
@@ -91,11 +91,11 @@ function OpenPropSingle
     % Instead, these variables are computed through formulas or remain unused
     % in this version of the GUI but are still present to allocate space for
     % future use.
-    % 
-    % % 
+    %
+    % %
     % % global Filename             % Filename prefix
-    % % 
-    % % 
+    % %
+    % %
     % % global SpecificationsValues;      % Contains the following variables:
     % % % General variables
     % % global Z_in;                % Number of blades
@@ -104,7 +104,7 @@ function OpenPropSingle
     % % global T_in;                % Required thrust [N]
     % % global Vs_in;               % Ship speed [m/s]
     % % global Dhub_in;             % Hub diameter [m]
-    % % 
+    % %
     % % global Js_in;               % ** Js = Vs/(n*D) ,  advance coefficient
     % % global KT_in;               % ** KT = THRUST/(rho*n^2*D^4)
     % % global n_in;                % ** propeller speed [rev/s] = Vs/(Js*D) = N/60
@@ -115,36 +115,36 @@ function OpenPropSingle
     % % global ITER_in;             % Max iterations
     % % global Rhv_in;              % Hub vortex radius/hub radius
     % %     global SpecificationsText;
-    % % 
-    % % 
+    % %
+    % %
     % % global DuctValues;          % Contains the following variables:
     % % % Ducted Propeller variables
     % % global TAU;                 % Thrust ratio
     % % global CDd;                 % Duct section drag coefficient
-    % % 
-    % % 
+    % %
+    % %
     % % global CavValues;           % Contains the following variables:
     % % % Cavitation Analysis variables
     % % global H_in;                % Shaft centerline depth [m]
     % % global dV_in;               % Inflow variation [m/s]
-    % % 
-    % % 
+    % %
+    % %
     % % global FlagValues;          % Contains the following variables:
     % % % Flags
     % % global Propeller_flag;      % 0 == turbine, 1 == propeller
     % % global Hub_flag;            % 0 == no hub, 1 == hub
     % % global Duct_flag;           % 0 == no duct, 1 == duct
-    % % 
+    % %
     % % global Chord_flag;          % ** CHORD OPTIMIZATION FLAG **
-    % % 
+    % %
     % % global Viscous_flag;        % 0 == viscous forces off (CD = 0), 1 == viscous forces on
     % % global Plot_flag;           % 0 == do not display plots, 1 == display plots
-    % % 
+    % %
     % % global FoilValues;          % Contains the following variables:
     % % % Airfoil type
     % % global Meanline;            % Meanline form
     % % global Thickness;           % Thickness form
-    % % 
+    % %
     % % % Variables for geometry input table
     % % global XR_in;               % Radius ratio (r/R) at control point
     % % global XCoD_in;             % Camber to diameter ratio at XR
@@ -179,8 +179,8 @@ function OpenPropSingle
     XR_def          = [.2 .3 .4 .5 .6 .7 .8 .9 .95 1];          % Radius ratio (r/R)
     N_R0            = length(XR_def);                           % Number of input radii
 
-    
-    
+
+
     XCoD_def        = [0.1600 0.1812 0.2024 0.2196 0.2305 0.2311 0.2173 0.1807 0.1388 0.0010];     % chord to diameter ratio at XR
     XCD_def         = ones(1,N_R0).*0.008;                      % Coefficient of drag at XR
 
@@ -218,7 +218,7 @@ function OpenPropSingle
     rho_def         = 1000;                                     % Water density
     Mp_def          = 20;                                       % Number of vortex panels over the radius
     Np_def          = 20;                                       % Number of points over the chord
- 
+
 
     n_def           = N_def/60;                                 % ** propeller speed [rev/s] = Vs/(Js*D) = N/60
     lambda_def      = n_def*2*pi*(D_def/2)/Vs_def;
@@ -242,12 +242,12 @@ function OpenPropSingle
     % Propeller_flag  = 1;                                        % 0 == turbine, 1 == propeller
     % Hub_flag        = 1;                                        % 0 == no hub, 1 == hub
     % Duct_flag       = 0;                                        % 0 == no duct, 1 == duct
-    % 
+    %
     % Chord_flag      = 0;                                        % ** CHORD OPTIMIZATION FLAG **
-    % 
+    %
     % Viscous_flag    = 1;                                        % 0 == viscous forces off (CD = 0), 1 == viscous forces on
     % Plot_flag       = 0;                                        % 0 == do not display plots, 1 == display plots
-    % 
+    %
 
     % % Airfoil type
     % Thickness       = 'NACA66 (DTRC Modified)';                 % Thickness form
@@ -307,7 +307,7 @@ function OpenPropSingle
 
     % =========================================================================
     % -------------------------- GUI Layout Constants -------------------------
-    % 
+    %
     % This section presents the constant values for the dimensions of those
     % elements used in the GUI, as well as the construction formulas for the
     % different panels, including margins. The formulas are presented in a
@@ -380,7 +380,7 @@ function OpenPropSingle
                          'numbertitle','off','name','OpenProp','menubar','none',...'toolbar','figure',...
                          'resize','off','color',[0.702 0.702 0.702]);
 
-    % % -------------------------------                 
+    % % -------------------------------
     % if strcmp(computer,'GLNX32') || strcmp(computer,'GLNXA64')
 
         set(Fig_Main,'resize','on');
@@ -435,7 +435,7 @@ function OpenPropSingle
                           panelfontsize,'fontweight','bold','units','characters',...
                           'position',[1+Specificationsbox+BladeDesignbox+Inflowbox...
                           1+Ductboxht+Foilboxht Flagbox Flagboxht],'clipping','on',...
-                          'SelectionChangeFcn',@checkTurbine);
+                          'selectionchangedfcn',@checkTurbine);
 
     Foil            = uipanel('parent',Fig_Main,'title','Airfoil type','fontsize',...
                           panelfontsize,'fontweight','bold','units','characters',...
@@ -457,19 +457,19 @@ function OpenPropSingle
     % %                             [1+1 1+Ductboxht+Specificationsboxht+2 selectbox selectboxht],...
     % %                             'horizontalalignment','left','callback','OpenPropParam',...
     % %                             'tooltipstring','Parametric Study');
-    % % 
+    % %
     % % Select(2)     = uicontrol(Fig_Main,'units','characters','style',...
     % %                             'pushbutton','string','SP','position',...
     % %                             [1+1+selectbox 1+Ductboxht+Specificationsboxht+2 selectbox selectboxht],...
     % %                             'horizontalalignment','left','value',1,...
     % %                             'tooltipstring','Single Propeller Design');
-    % % 
+    % %
     % % Select(3)     = uicontrol(Fig_Main,'units','characters','style',...
     % %                             'pushbutton','string','A','position',...
     % %                             [1+1+2*selectbox 1+Ductboxht+Specificationsboxht+2 selectbox selectboxht],...
     % %                             'horizontalalignment','left','callback','OpenPropAnalyze',...
     % %                             'tooltipstring','Analyze Propeller');
-    % % 
+    % %
 
 %     Selectcell      = {'Single Design','Parametric Study','Off-design Analysis'};
     Selectcell      = {'Single Design','Parametric Study'};
@@ -638,29 +638,29 @@ function OpenPropSingle
     %                            'text','string','Shaft centerline depth (m):','position',...
     %                            [2 Cavboxht-4 cavtextbox textht],...
     %                            'horizontalalignment','left');
-    % 
+    %
     % Cavtext(2)     = uicontrol(Cav,'units','characters','style',...
     %                            'text','string','Inflow variation (m/s):','position',...
     %                            [2 Cavboxht-4-editboxht cavtextbox textht],...
     %                            'horizontalalignment','left');
-    % 
+    %
     % Cavtext(3)     = uicontrol(Cav,'units','characters','style',...
     %                            'text','string','Ideal angle of attackii:','position',...
     %                            [2 Cavboxht-4-editboxht*2 cavtextbox textht],...
     %                            'horizontalalignment','left');
-    % 
+    %
     % CavValues(1)   = uicontrol(Cav,'units','characters','style',...
     %                            'edit','string',num2str(TAU_def),...
     %                            'position',[2+cavtextbox Cavboxht-4,...
     %                            editbox editboxht],'backgroundcolor',[1 1 1],...
     %                            'enable','off');
-    % 
+    %
     % CavValues(2)   = uicontrol(Cav,'units','characters','style',...
     %                            'edit','string',num2str(CDd_def),...
     %                            'position',[2+cavtextbox Cavboxht-4-editboxht,...
     %                            editbox editboxht],'backgroundcolor',[1 1 1],...
     %                            'enable','off');
-    % 
+    %
     % CavValuesoff(1)= uicontrol(Cav,'units','characters','style',...
     %                            'edit','string','1',...
     %                            'position',[2+cavtextbox Cavboxht-4-editboxht*2,...
@@ -692,23 +692,23 @@ function OpenPropSingle
                                'horizontalalignment','left');
 
     Values(1)   = uicontrol(Calculator,'units','characters','style',...
-                               'edit','string',Js_def,...
+                               'edit','string',num2str(Js_def),...
                                'position',[cavtextbox-4, Valuesboxht-4, editbox, editboxht],'backgroundcolor',[1 1 1],...
                                'enable','off');
 
     Values(2)   = uicontrol(Calculator,'units','characters','style',...
-                               'edit','string',lambda_def,...
+                               'edit','string',num2str(lambda_def),...
                                'position',[cavtextbox-4, Valuesboxht-4-editboxht, editbox, editboxht],'backgroundcolor',[1 1 1],...
                                'enable','off');
 
     Values(3)   = uicontrol(Calculator,'units','characters','style',...
-                               'edit','string',KT_def,...
+                               'edit','string',num2str(KT_def),...
                                'position',[2+cavtextbox*2+editbox+2+4 Valuesboxht-4-editboxht,...
                                editbox editboxht],'backgroundcolor',[1 1 1],...
                                'enable','off');
 
     Values(4)   = uicontrol(Calculator,'units','characters','style',...
-                               'edit','string',CT_def,...
+                               'edit','string',num2str(CT_def),...
                                'position',[2+cavtextbox*2+editbox+2+4 Valuesboxht-4,...
                                editbox editboxht],'backgroundcolor',[1 1 1],...
                                'enable','off');
@@ -829,7 +829,7 @@ end
 % =========================================================================
 % =========================================================================
 % -------------------------------------------------------------------------
-%               And the meek shall inherit the earth...                   %         
+%               And the meek shall inherit the earth...                   %
 % -------------------------------------------------------------------------
 % =========================================================================
 % =========================================================================
@@ -840,10 +840,12 @@ end
 %%
 % ================================ execute ================================
 function execute(hObject,ED)
-    % 
+    %
     % This subfunction runs OpenProp.
     %
-    newPlots;
+    addpath("../SourceCode")
+    newPlots();
+    % newestPlots();
 
     global Plots PlotPanels Toggle OnDesignValues ConversionValues systemToggle;
 
@@ -853,8 +855,8 @@ function execute(hObject,ED)
 
     global pt
 
-    % ------------------------------------------------------------------------- 
-    % Figure out what the current working directory is, 
+    % -------------------------------------------------------------------------
+    % Figure out what the current working directory is,
     % and change directories to OpenPropDirectory/filename
     filename = get(Filename,'string');                       % Filename prefix
 
@@ -905,7 +907,7 @@ function execute(hObject,ED)
     rho         = str2double(get(SpecificationsValues(7),'string')); 	% water density [kg/m^3]
     Mp          = str2double(get(SpecificationsValues(8),'string')); 	% number of vortex panels over the radius
     Np          = str2double(get(SpecificationsValues(9),'string')); 	% Number of points over the chord [ ]
-    
+
     ITER        = 40;   % number of iterations in analysis
     Rhv         = 0.5;	% hub vortex radius / hub radius
 
@@ -948,10 +950,10 @@ function execute(hObject,ED)
 
 
     XR          = str2double(get(XR_in,  'string'));             	% radius / propeller radius
-    
+
     XCoD        = str2double(get(XCoD_in,'string'));           	% chord / diameter
     XCLmax      = str2double(get(XCoD_in,'string'));            % maximum lift coefficient (for chord optimization)
-    
+
     XCD     	= str2double(get(XCD_in, 'string'));            	% section drag coefficient
 
     ri          = str2double(get(ri_in, 'string'));
@@ -980,25 +982,25 @@ function execute(hObject,ED)
     Rhub        = Dhub/2;                                       % hub radius [m]
     Rhub_oR     = Rhub/R;
 
-    CTDES       = THRUST/(0.5*rho*Vs^2*pi*R^2);                 % CT thrust coefficient required          
+    CTDES       = THRUST/(0.5*rho*Vs^2*pi*R^2);                 % CT thrust coefficient required
 
     % dVs         = dV/Vs;                                        % axial inflow variation / Vs
 
-    
-    
+
+
     % *************************************************************************
     % *************************************************************************
     input.part1      = '------ Performance inputs ------';
     input.Z          = Z;           % [1 x 1], [ ] number of blades
     input.N          = N;           % propeller speed [RPM]
-    input.D          = D;           % propeller diameter [m]  
+    input.D          = D;           % propeller diameter [m]
     input.Vs         = Vs;          % [1 x 1], [m/s] ship speed
     input.Js         = Js;          % [1 x 1], [ ] advance coefficient, Js = Vs/nD = pi/L
     input.L          = L;           % [1 x 1], [ ] tip speed ratio, L = omega*R/V
     input.THRUST     = THRUST;      % required thrust [N]
     input.CTDES      = CTDES;       % [1 x 1], [ ] desired thrust coefficient
     input.TAU        = TAU;          % Thrust ratio
-    
+
     input.part2      = '------ Geometry inputs ------';
     input.Mp         = Mp;          % [1 x 1], [ ] number of blade sections
     input.Np         = Np;          % [1 x 1], [ ] number of points along the chord
@@ -1007,16 +1009,16 @@ function execute(hObject,ED)
     input.XR         = XR;          % [length(XR) x 1], [ ] input radius/propeller radiusat XR
     input.XCD        = XCD;         % [length(XR) x 1], [ ] input drag coefficient       at XR
     input.XCoD       = XCoD;        % [length(XR) x 1], [ ] input chord / diameter       at XR
-    input.Xt0oD      = Xt0oD;       % [length(XR) x 1], [ ] input thickness / chord      at XR 
-    input.skew0      = skew0;       % [length(XR) x 1], [ ] input skew  [deg]      at XR 
-    input.rake0      = rake0;       % [length(XR) x 1], [ ] input rake X/D       at XR 
+    input.Xt0oD      = Xt0oD;       % [length(XR) x 1], [ ] input thickness / chord      at XR
+    input.skew0      = skew0;       % [length(XR) x 1], [ ] input skew  [deg]      at XR
+    input.rake0      = rake0;       % [length(XR) x 1], [ ] input rake X/D       at XR
     input.Meanline   = Meanline;    % 2D section meanline  flag
-    input.Thickness  = Thickness;   % 2D section thickness flag 
+    input.Thickness  = Thickness;   % 2D section thickness flag
     input.XCLmax     = XCLmax;
 
     if ~isempty(ri)  , input.ri  = ri;  end
     if ~isempty(VAI) , input.VAI = VAI; end        % [length(XR) x 1], [ ] input axial inflow velocity  at XR
-    if ~isempty(VTI) , input.VTI = VTI; end        % [length(XR) x 1], [ ] input swirl inflow velocity  
+    if ~isempty(VTI) , input.VTI = VTI; end        % [length(XR) x 1], [ ] input swirl inflow velocity
 
 
     input.Rduct     = R;
@@ -1059,11 +1061,11 @@ function execute(hObject,ED)
     % *************************************************************************
     % *************************************************************************
 
-    
-    
+
+
     % =========================================================================
     % ============================ execution script ===========================
-    
+
     % ---------------------------------------------------------------------
     % Plot from input:
 
@@ -1075,7 +1077,7 @@ function execute(hObject,ED)
         axes(h);
         hold on;
 
-        XXR   = XR(1) + (XR(end)-XR(1))*(sin((0:60)*pi/(2*60))); 
+        XXR   = XR(1) + (XR(end)-XR(1))*(sin((0:60)*pi/(2*60)));
         XXCoD = InterpolateChord(XR,XCoD,XXR);
 
         plot(XXR, XXCoD,'b','LineWidth',2);
@@ -1084,8 +1086,8 @@ function execute(hObject,ED)
         plot(XR, XCoD,'.b','MarkerSize',16)
         plot(XR,-XCoD,'.b','MarkerSize',16)
 
-        xlabel('r/R','Fontsize',16,'FontName','Times');   
-        ylabel('c/R','Fontsize',16,'FontName','Times');       
+        xlabel('r/R','Fontsize',16,'FontName','Times');
+        ylabel('c/R','Fontsize',16,'FontName','Times');
         set(gca,'Fontsize',14,'FontName','Times')
         grid on, box on,
 
@@ -1097,9 +1099,9 @@ function execute(hObject,ED)
         set(0,'CurrentFigure',Plots);
         h = axes('parent',PlotPanels(2));
         axes(h);
-        hold on; 
+        hold on;
 
-        XXR    = XR(1) + (XR(end)-XR(1))*(sin((0:60)*pi/(2*60))); 
+        XXR    = XR(1) + (XR(end)-XR(1))*(sin((0:60)*pi/(2*60)));
         XXt0oD = pchip(XR,Xt0oD,XXR);
 
         plot(XXR, XXt0oD,'b','LineWidth',2);
@@ -1108,8 +1110,8 @@ function execute(hObject,ED)
         plot(XR, Xt0oD,'.b','MarkerSize',16)
         plot(XR,-Xt0oD,'.b','MarkerSize',16)
 
-        xlabel('r/R','FontSize',16,'FontName','Times');   
-        ylabel('t0/D','FontSize',16,'FontName','Times');       
+        xlabel('r/R','FontSize',16,'FontName','Times');
+        ylabel('t0/D','FontSize',16,'FontName','Times');
         set(gca,     'FontSize',14,'FontName','Times');
         grid on, box on,
 
@@ -1132,18 +1134,18 @@ function execute(hObject,ED)
             xlim([-0.1 1.1])
         end
 
-        xlabel('VA / Vs (blue),   VT / Vs (red)','FontSize',16,'FontName','Times');   
-        ylabel('r / R','FontSize',16,'FontName','Times');       
+        xlabel('VA / Vs (blue),   VT / Vs (red)','FontSize',16,'FontName','Times');
+        ylabel('r / R','FontSize',16,'FontName','Times');
         set(gca,     'FontSize',14,'FontName','Times');
         grid on, box on,
 
-    
+
     % ---------------------------------------------------------------------
     % Perform design optimization
     pt.design   = EppsOptimizer(input);
     % ---------------------------------------------------------------------
 
-   
+
     % ---------------------------------------------------------------------
     % Set On Design Performance values
 
@@ -1186,9 +1188,9 @@ function execute(hObject,ED)
     set(systemToggle,'enable','on');
     % ---------------------------------------------------------------------
 
-    
-    
-    % ---------------------------------------------------------------------    
+
+
+    % ---------------------------------------------------------------------
     disp(' ')
     disp('Creating graphical and text reports')
     disp(' ')
@@ -1196,8 +1198,8 @@ function execute(hObject,ED)
     % Create graphical and text reports
     Make_Reports(pt);
     % ---------------------------------------------------------------------
-    
-   
+
+
     % ---------------------------------------------------------------------
     % Plot t0/D vs RC
         set(0,'CurrentFigure',Plots);
@@ -1211,8 +1213,8 @@ function execute(hObject,ED)
         plot(pt.design.RC, pt.design.t0oD,'b.','MarkerSize',16);
         plot(pt.design.RC,-pt.design.t0oD,'b.','MarkerSize',16);
 
-        xlabel('r/R','FontSize',16,'FontName','Times');   
-        ylabel('t0/D','FontSize',16,'FontName','Times');            
+        xlabel('r/R','FontSize',16,'FontName','Times');
+        ylabel('t0/D','FontSize',16,'FontName','Times');
         set(gca,     'FontSize',14,'FontName','Times');
         grid on; box on,
 
@@ -1228,8 +1230,8 @@ function execute(hObject,ED)
 
         plot(pt.design.RC,pt.design.CL,'b.','MarkerSize',16);
 
-        xlabel('r/R','FontSize',16,'FontName','Times');   
-        ylabel('CL','FontSize',16,'FontName','Times');            
+        xlabel('r/R','FontSize',16,'FontName','Times');
+        ylabel('CL','FontSize',16,'FontName','Times');
         set(gca,     'FontSize',14,'FontName','Times');
         grid on; box on,
 
@@ -1242,29 +1244,29 @@ function execute(hObject,ED)
                 set(gca,'Ylim',[0 ylimits(2)]);
             else
                 set(gca,'Ylim',[ylimits(1) 0]);
-            end   
+            end
     % ---------------------------------------------------------------------
 
-    
+
     % ---------------------------------------------------------------------
     % Determine propeller geometry
     if Make2Dplot_flag == 1 | Make3Dplot_flag == 1
         pt.geometry = Geometry(pt);
     end
     % ---------------------------------------------------------------------
-    
+
     % ---------------------------------------------------------------------
     % if Cav_flag
-    %     
+    %
     %     % Pefrorm cavitation analysis
     %     Cav_CavitationMap(pt);
-    %     
+    %
     %     VLMbucket
-    %     
+    %
     % end
     % ---------------------------------------------------------------------
-    
-     
+
+
     % ---------------------------------------------------------------------
     if Analyze_flag == 1
         % % Analyze off-design states
@@ -1286,24 +1288,24 @@ function execute(hObject,ED)
 
             Js_curve = linspace(min(pt.states.Js),max(pt.states.Js),100);
 
-            EFFY_curve = (Js_curve/(2*pi)) * VMIV .* pchip(pt.states.Js,pt.states.KT,Js_curve)./pchip(pt.states.Js,pt.states.KQ,Js_curve); 
+            EFFY_curve = (Js_curve/(2*pi)) * VMIV .* pchip(pt.states.Js,pt.states.KT,Js_curve)./pchip(pt.states.Js,pt.states.KQ,Js_curve);
 
             % Efficiency (green squares)
                     plot(Js_curve,EFFY_curve,'-','LineWidth',2,'Color',[0 0.8 0])
-            Heffy = plot(pt.states.Js,pt.states.EFFY,'sk','MarkerSize',5,'LineWidth',1,'MarkerFaceColor',[0 0.8 0]); 
+            Heffy = plot(pt.states.Js,pt.states.EFFY,'sk','MarkerSize',5,'LineWidth',1,'MarkerFaceColor',[0 0.8 0]);
 
             % Thrust coefficient (blue diamonds)
                     plot(pt.states.Js,pt.states.KT,'b-','LineWidth',2)
             Hkt   = plot(pt.states.Js,pt.states.KT,'dk','MarkerSize',5,'LineWidth',1,'MarkerFaceColor','b');
 
             % Torque coefficient (red circles)
-                  plot(pt.states.Js,10*pt.states.KQ,'r-','LineWidth',2)    
+                  plot(pt.states.Js,10*pt.states.KQ,'r-','LineWidth',2)
             Hkq = plot(pt.states.Js,10*pt.states.KQ,'ok','MarkerSize',5,'LineWidth',1,'MarkerFaceColor','r');
 
             % Design point
             plot(pt.design.Js*[1 1],[0 2],'k--','LineWidth',1);
 
-            xlabel('Js','FontSize',16,'FontName','Times'), 
+            xlabel('Js','FontSize',16,'FontName','Times'),
             ylabel('KT, 10*KQ, EFFY','FontSize',16,'FontName','Times')
             axis([min(pt.states.Js) max(pt.states.Js) 0 0.9])
             set(gca,     'FontSize',14,'FontName','Times');
@@ -1324,26 +1326,26 @@ function execute(hObject,ED)
             % % Betz limit
             % plot([0 ceil(max(pt.states.L))],(16/27)*[1 1],'k--','LineWidth',1);
 
-            xlabel('L','FontSize',16,'FontName','Times'), 
+            xlabel('L','FontSize',16,'FontName','Times'),
             ylabel('CP','FontSize',16,'FontName','Times'),
 
             set(gca,'Ytick',[0:0.1:0.6])
 
             axis([0 ceil(max(pt.states.L))  0 0.6])
             set(gca,     'FontSize',14,'FontName','Times');
-            box on, grid on,   
+            box on, grid on,
 
         end
 
     end
     % ---------------------------------------------------------------------
-    
-  
+
+
 
     % ---------------------------------------------------------------------
     % Plot parametric study results
     if exist([filename '.mat'],'file')
-        
+
                 CLR = [     1       0       0;      ... % (1) Red
                             0       0.9     0;      ... % (2) Green
                             0       0       1;      ... % (3) Blue
@@ -1354,7 +1356,7 @@ function execute(hObject,ED)
                             0.75    0.5     0.25;   ... % (8) Brown
                             0.25    0.25    0.75;   ... % (9) Navy blue
                             0.25    0.5     0.75;   ... % (10) Steel blue
-                            0.75    0.75    0];         % (11) Burnt Yellow        
+                            0.75    0.75    0];         % (11) Burnt Yellow
 
         temp    = pt;
 
@@ -1427,8 +1429,8 @@ function execute(hObject,ED)
 
     end
     % ---------------------------------------------------------------------
-    
-    
+
+
     % ---------------------------------------------------------------------
     % pt overwrite sequence:
 
@@ -1450,7 +1452,7 @@ function execute(hObject,ED)
         pt.states   = temp.states;
 
     end
-    
+
     pt
 
     save(filename,'pt');
@@ -1462,12 +1464,265 @@ function execute(hObject,ED)
         'Thickness_index','filename','XR','XCoD','XCD','ri','VAI','VTI','Xt0oD','skew0',...
         'rake0');
     % ---------------------------------------------------------------------
-    
+
 end
+
 % =========================================================================
 % =========================================================================
 % =========================================================================
 %%
+% =========================================================================
+% =========================================================================
+% =========================================================================
+% newplots
+function newestPlots
+
+    global PlotPanels Toggle OnDesignValues systemToggle ConversionValues UnitsText;
+
+    % ---------------------------------------------------------------------
+    % -------------------------- GUI Layout Constants -------------------------
+    %
+    % This section presents the constant values for the dimensions of those
+    % elements used in the GUI, as well as the construction formulas for the
+    % different panels, including margins. The formulas are presented in a
+    % linear reading order based on the actual order in the GUI.
+
+    titlefontsize   = 25;
+    panelfontsize   = 11;
+
+    titleht         = 3;
+    textht          = 1.5;
+    editboxht       = 2;
+    pushht          = 2; % 1.75;
+
+    textbox         = 20;
+    ondesignbox     = 15;
+    editbox         = 10;
+
+    Windowht        = 44; % 40;           % 1 + Ductboxht + Specificationsboxht + 1 + titleht + 1;
+    Window          = 142;          % 1 + Specificationsbox + Inputbox + Flagbox + 1;
+
+    Togglebox       = textbox + 2;
+    Toggleboxht     = Windowht - 1 - titleht - 1;
+
+    Displaybox      = Window - 1 - Togglebox - 1;
+    Displayboxht    = Windowht - 1 - titleht - 1;
+
+    Conversionbox   = 2 + textbox + ondesignbox + editbox + 2;
+    Conversionboxht	= pushht * 8 * 1.25 + 1;
+
+    % =========================================================================
+    % ---------------------- Create figure for Plots GUI ----------------------
+
+    Plots       = figure('units','characters','position',[25 20 Window Windowht],...
+                         'name','Plots','numbertitle','off','toolbar','figure',... 'menubar','none'
+                         'color',[0.702 0.702 0.702],'resize','off');
+    % --- --- ---
+
+    Title       = uicontrol(Plots,'style','text','fontsize',titlefontsize,...
+                            'fontweight','bold','units','characters','position',...
+                            [0 Windowht-1-titleht Window 3],'string',{'OpenProp v3.3.4'});
+
+    % =========================================================================
+    % --------- Setup panels --------
+
+    Togglebar           = uibuttongroup('parent',Plots,'title','Figures and plots',...
+                                        'fontsize',panelfontsize,'fontweight','bold',...
+                                        'units','characters','position',[1 1 Togglebox...
+                                        Toggleboxht],'clipping','on','selectionchangedfcn',...
+                                        @togglefn);
+
+    % ---
+    %
+    % The panels defined from here on are set up using a (chronological) order
+    % criteria based on the different design stages, as presented in the following
+    % list:
+    %
+    % Inputs:
+    % 1 Expanded Blade
+    % 2 Thickness profile
+    % 3 Inflow profile
+    %
+    % Parametric:
+    % 4 Efficiency vs Diameter
+    % 5 Efficiency vs Rotational Speed (N)
+    %
+    %
+    % Design results:
+    %
+    % 6 On Design Perf. (default)
+    %
+    % 7 Circulation distribution
+    % 8 Induced Velocity
+    % 9 Beta & Beta i
+    %
+    % 10 Expanded Blade (after)
+    % 11 t0/D vs Radius at control points
+    % 12 CL vs Radius at control points
+    %
+    % 13 2D Geometry
+    % 14 3D Geometry
+    %
+    % 15 Performance curves
+    %
+    % ---
+
+
+    PlotPanels(1)       = uipanel('parent',Plots,'title','Expanded Blade (input blade)',  	'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','off');
+
+    PlotPanels(2)       = uipanel('parent',Plots,'title','Blade Thickness (input blade)', 	'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','off');
+
+    PlotPanels(3)       = uipanel('parent',Plots,'title','Inflow Profile',                	'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','off');
+
+    PlotPanels(4)       = uipanel('parent',Plots,'title','Efficiency vs Diameter',          'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','off');
+
+    PlotPanels(5)       = uipanel('parent',Plots,'title','Efficiency vs Rotation Speed',    'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','off');
+
+    PlotPanels(6)       = uipanel('parent',Plots,'title','On-design Performance',           'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','on');
+
+    PlotPanels(7)       = uipanel('parent',Plots,'title','Circulation Distribution',        'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','off');
+
+    PlotPanels(8)       = uipanel('parent',Plots,'title','Induced Velocity',                'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','off');
+
+    PlotPanels(9)       = uipanel('parent',Plots,'title','Inflow Angle',                    'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','off');
+
+    PlotPanels(10)       = uipanel('parent',Plots,'title','Expanded Blade (as designed)',   'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','off');
+
+    PlotPanels(11)       = uipanel('parent',Plots,'title','Blade Thickness (as designed)',  'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','off');
+
+    PlotPanels(12)       = uipanel('parent',Plots,'title','Lift Coefficient',               'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','off');
+
+    PlotPanels(13)       = uipanel('parent',Plots,'title','2D Geometry',                    'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','off');
+
+    PlotPanels(14)       = uipanel('parent',Plots,'title','3D Geometry',                    'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','off');
+
+    PlotPanels(15)       = uipanel('parent',Plots,'title','Performance Curves',             'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','off');
+
+    % ---------------------------------------------------------------------
+
+    % =========================================================================
+    % ------------------------ Togglebar Panel Elements -----------------------
+
+    ToggleText(1)	= uicontrol(Togglebar,'units','characters','style',...
+                                'text','string','From Inputs:','position',[1 Toggleboxht-2-pushht textbox textht]);
+
+    Toggle(1)       = uicontrol(Togglebar,'units','characters','style',...
+                                'togglebutton','string','Expanded Blade','position',[1 Toggleboxht-2-pushht*2 textbox pushht]);
+
+    Toggle(2)       = uicontrol(Togglebar,'units','characters','style',...
+                                'togglebutton','string','Blade Thickness','position',[1 Toggleboxht-2-pushht*3 textbox pushht]);
+
+    Toggle(3)       = uicontrol(Togglebar,'units','characters','style',...
+                                'togglebutton','string','Inflow Profile','position',[1 Toggleboxht-2-pushht*4 textbox pushht]);
+
+    ToggleText(2)	= uicontrol(Togglebar,'units','characters','style',...
+                                'text','string','Parametric:','position',[1 Toggleboxht-2-pushht*5 textbox textht]);
+
+    Toggle(4)       = uicontrol(Togglebar,'units','characters','style',...
+                                'togglebutton','string','Effy vs D','position',[1 Toggleboxht-2-pushht*6 textbox pushht]);
+
+    Toggle(5)       = uicontrol(Togglebar,'units','characters','style',...
+                                'togglebutton','string','Effy vs N','position',[1 Toggleboxht-2-pushht*7 textbox pushht]);
+
+    ToggleText(3)	= uicontrol(Togglebar,'units','characters','style',...
+                                'text','string','Design results:','position',[1 Toggleboxht-2-pushht*8 textbox textht]);
+
+    Toggle(6)       = uicontrol(Togglebar,'units','characters','style',...
+                                'togglebutton','string','Design Performance','position',[1 Toggleboxht-2-pushht*9 textbox pushht],'value',1);
+
+    Toggle(7)       = uicontrol(Togglebar,'units','characters','style',...
+                                'togglebutton','string','Circulation Distribution','position',[1 Toggleboxht-2-pushht*10 textbox pushht]);
+
+    Toggle(8)       = uicontrol(Togglebar,'units','characters','style',...
+                                'togglebutton','string','Induced Velocity','position',[1 Toggleboxht-2-pushht*11 textbox pushht]);
+
+    Toggle(9)       = uicontrol(Togglebar,'units','characters','style',...
+                                'togglebutton','string','Inflow Angle','position',[1 Toggleboxht-2-pushht*12 textbox pushht]);
+
+    Toggle(10)       = uicontrol(Togglebar,'units','characters','style',...
+                                'togglebutton','string','Expanded Blade','position',[1 Toggleboxht-2-pushht*13 textbox pushht]);
+
+    Toggle(11)       = uicontrol(Togglebar,'units','characters','style',...
+                                'togglebutton','string','Blade Thickness','position',[1 Toggleboxht-2-pushht*14 textbox pushht]);
+
+    Toggle(12)       = uicontrol(Togglebar,'units','characters','style',...
+                                'togglebutton','string','Lift Coefficient','position',[1 Toggleboxht-2-pushht*15 textbox pushht]);
+
+    Toggle(13)       = uicontrol(Togglebar,'units','characters','style',...
+                                'togglebutton','string','2D Geometry','position',[1 Toggleboxht-2-pushht*16 textbox pushht]);
+
+    Toggle(14)       = uicontrol(Togglebar,'units','characters','style',...
+                                'togglebutton','string','3D Geometry','position',[1 Toggleboxht-2-pushht*17 textbox pushht]);
+
+    Toggle(15)       = uicontrol(Togglebar,'units','characters','style',...
+                                'togglebutton','string','Performance Curves','position',[1 Toggleboxht-2-pushht*18 textbox pushht]);
+
+    % ---------------------------------------------------------------------
+
+
+    % =========================================================================
+    % ------------------ On Design Performance Panel Elements -----------------
+
+    ODtextsrc           = {'J =' 'KT =' 'KQ =' 'EFFY =' 'ADEFFY =' 'CT =' 'CQ =' 'CP ='};
+
+    for index = 1 : length(ODtextsrc)
+
+        OnDesignText(index)     = uicontrol(PlotPanels(6),'units','characters','style',...
+                                'text','string',ODtextsrc(index),'position',...
+                                [2 Displayboxht-4-pushht*index*1.25 ondesignbox textht],...
+                                'horizontalalignment','left');
+
+        OnDesignValues(index)	= uicontrol(PlotPanels(6),'units','characters','style',...
+                                'edit','string','','position',...
+                                [2+ondesignbox Displayboxht-4-pushht*index*1.25 editbox editboxht],...
+                                'enable','off');
+
+    end
+
+
+    % Create a subpanel to group those values that may be converted between SI and English
+
+    ConversionPanel     = uibuttongroup(PlotPanels(6),'units','characters','position',...
+                                        [2+ondesignbox+editbox+6 Displayboxht-4-1-pushht*8*1.25...
+                                        Conversionbox Conversionboxht],'clipping','on',...
+                                        'selectionchangedfcn',@convertfn);
+
+    systemToggle(1)     = uicontrol(ConversionPanel,'style','radiobutton','units','characters',...
+                                    'position',[2 Conversionboxht-2.5 editbox textht],...
+                                    'string','SI','horizontalalignment','left','enable','off');
+
+    systemToggle(2)     = uicontrol(ConversionPanel,'style','radiobutton','units','characters',...
+                                    'position',[2+editbox Conversionboxht-2.5 editbox textht],...
+                                    'string','English','horizontalalignment','left','enable','off');
+
+
+    Conversiontextsrc   = {'Ship speed (Vs) =' 'Rotation speed (N) =' 'Diameter (D) ='...
+                           'Thrust (T) =' 'Torque (Q) =' 'Power (P) ='};
+
+    unitssrc            = {'m/s' 'RPM' 'm' 'N' 'Nm' 'W'};
+
+    for index = 1 : length(Conversiontextsrc)
+
+        ConversionText(index)	= uicontrol(ConversionPanel,'units','characters','style',...
+                                'text','string',Conversiontextsrc(index),'position',...
+                                [2 Conversionboxht-2.5-pushht*(index)*1.25 textbox textht],...
+                                'horizontalalignment','left');
+
+        ConversionValues(index)	= uicontrol(ConversionPanel,'units','characters','style',...
+                                'edit','string','','position',...
+                                [2+textbox Conversionboxht-2.5-pushht*(index)*1.25 ondesignbox editboxht],...
+                                'enable','off');
+
+        UnitsText(index)	= uicontrol(ConversionPanel,'units','characters','style',...
+                                'text','string',unitssrc(index),'position',...
+                                [2+textbox+ondesignbox+1 Conversionboxht-2.5-pushht*(index)*1.25 editbox textht],...
+                                'horizontalalignment','left');
+
+
+
+    end
+
+endfunction
 % =========================================================================
 % =========================================================================
 % =========================================================================
@@ -1480,7 +1735,7 @@ end
 % =========================================================================
 % ================================ savedata ===============================
 function savedata(hObject,ED)
-    % 
+    %
     % This subfunction saves all values presented in the OpenProp GUI.
     %
 
@@ -1493,8 +1748,8 @@ function savedata(hObject,ED)
 
     filename   	= get(Filename,'string');                       % Filename prefix
 
-    % ------------------------------------------------------------------------- 
-    % Figure out what the current working directory is, 
+    % -------------------------------------------------------------------------
+    % Figure out what the current working directory is,
     % and change directories to OpenPropDirectory/filename
     rest = pwd;
 
@@ -1564,7 +1819,7 @@ function savedata(hObject,ED)
     Make2Dplot_flag = get(FlagValues(8),'value');               % 0 == do not make a 2D plot of the results, 1 == make plot
     Make3Dplot_flag = get(FlagValues(8),'value');               % 0 == do not make a 3D plot of the results, 1 == make plot
 
-    Analyze_flag	= get(FlagValues(9),'value'); 
+    Analyze_flag	= get(FlagValues(9),'value');
 
     % Cav_flag	= get(FlagValues(10),'value');                   % 0 == do not run cavitation mapping, 1 == run cavitation mapping
 
@@ -1607,7 +1862,7 @@ end
 % =========================================================================
 % ================================ loaddata ===============================
 function loaddata(hObject,ED)
-    % 
+    %
     % This subfunction loads all values presented in the OpenProp GUI.
     %
 
@@ -1616,8 +1871,8 @@ function loaddata(hObject,ED)
 
     %%
 
-    % ------------------------------------------------------------------------- 
-    % Figure out what the current working directory is, 
+    % -------------------------------------------------------------------------
+    % Figure out what the current working directory is,
     % and change directories to /OpenPropDirectory/
     rest = pwd;
 
@@ -1628,18 +1883,25 @@ function loaddata(hObject,ED)
     if     strcmp(CurrentDirectory,OpenPropDirectory)    % OpenPropDirectory == 'OpenProp_vX.X.X';
 
         % stay in /OpenPropDirectory/
-        uiload;
+        % uiload;
+        [fname, fpath, fid ] = uigetfile;
         cd(['./',filename])
+        load(filename);
+
 
     elseif strcmp(CurrentDirectory,'SourceCode')
 
         cd('../')
-        uiload;
+        %uiload;
+        [filename, fpath, fid ] = uigetfile;
         cd(['./',filename])
+        load(filename);
 
     else
         % already in /OpenPropDirectory/filename
-        uiload;
+        % uiload;
+        [filename, fpath, fid ] = uigetfile;
+        load(filename);
     end
     % -------------------------------------------------------------------------
 
@@ -1667,6 +1929,7 @@ function loaddata(hObject,ED)
     set(FlagValues(3),'value',Hub_flag);              	% 0 == no hub, 1 == hub
     set(FlagValues(4),'value',Duct_flag);              	% 0 == no duct, 1 == duct
 
+    addpath(pwd);
 
     set(FlagValues(5),'value',Chord_flag);              % ** CHORD OPTIMIZATION FLAG **
     changeChord;       % Testing whether running the callback function on loading updates fields and avoids loading issue
@@ -1732,19 +1995,19 @@ end
 % =========================================================================
 % =========================================================================
 % function changeCav(hObject,ED)
-% 
+%
 %     global CavValues FlagValues;
-% 
+%
 %     if get(FlagValues(10),'value')
-% 
+%
 %         set(CavValues,'enable','on');
-% 
+%
 %     else
-% 
+%
 %         set(CavValues,'enable','off');
-% 
+%
 %     end
-% 
+%
 % end
 % =========================================================================
 % =========================================================================
@@ -1759,8 +2022,8 @@ function changeDir(hObject,ED)
 
     filename    = get(Filename,'string');                       % Filename prefix
 
-    % ------------------------------------------------------------------------- 
-    % Figure out what the current working directory is, 
+    % -------------------------------------------------------------------------
+    % Figure out what the current working directory is,
     % and change directories to OpenPropDirectory/filename
     rest    = pwd;
     root  = '';
@@ -1862,44 +2125,6 @@ end
 % =========================================================================
 % =========================================================================
 % =========================================================================
-function changeChord(hObject,ED)
-    % global SpecificationsValues DuctValues CavValues FlagValues FoilValues Filename...
-    %        XR_in XCoD_in XCD_in VAI_in VTI_in Xt0oD_in skew0_in rake0_in...
-    %        Meanline_cell Thickness_cell;
-
-    global FlagValues XCoD_in;
-
-    global Col_Label XCoD_values XCLmax_values;
-
-    if get(FlagValues(5),'value')
-
-        XCoD_values     = str2double(get(XCoD_in,'string'));
-
-        set(Col_Label(2),'string','XCLmax');
-
-        for i = 1:length(XCoD_in)
-            set(XCoD_in(i),'string',num2str(XCLmax_values(i)));
-        end
-    else
-
-        XCLmax_values  = str2double(get(XCoD_in,'string'));
-
-
-        set(Col_Label(2),'string','c/D');
-
-        for i = 1:length(XCoD_in)
-            set(XCoD_in(i),'string',num2str(XCoD_values(i)));
-        end        
-    end
-
-end
-% =========================================================================
-% =========================================================================
-% =========================================================================
-%%
-% =========================================================================
-% =========================================================================
-% =========================================================================
 function changeViscous(hObject,ED)
 
     global FlagValues XCD_in XCD_values;
@@ -1965,326 +2190,12 @@ end
 % =========================================================================
 % =========================================================================
 % =========================================================================
-function newPlots
 
-    global PlotPanels Toggle OnDesignValues systemToggle ConversionValues UnitsText;
 
-    % ---------------------------------------------------------------------
-    % -------------------------- GUI Layout Constants -------------------------
-    %
-    % This section presents the constant values for the dimensions of those
-    % elements used in the GUI, as well as the construction formulas for the
-    % different panels, including margins. The formulas are presented in a
-    % linear reading order based on the actual order in the GUI.
-
-    titlefontsize   = 25;
-    panelfontsize   = 11;
-
-    titleht         = 3;
-    textht          = 1.5;
-    editboxht       = 2;
-    pushht          = 2; % 1.75;
-
-    textbox         = 20;
-    ondesignbox     = 15;
-    editbox         = 10;
-
-    Windowht        = 44; % 40;           % 1 + Ductboxht + Specificationsboxht + 1 + titleht + 1;
-    Window          = 142;          % 1 + Specificationsbox + Inputbox + Flagbox + 1;
-
-    Togglebox       = textbox + 2;
-    Toggleboxht     = Windowht - 1 - titleht - 1;
-
-    Displaybox      = Window - 1 - Togglebox - 1;
-    Displayboxht    = Windowht - 1 - titleht - 1;
-
-    Conversionbox   = 2 + textbox + ondesignbox + editbox + 2;
-    Conversionboxht	= pushht * 8 * 1.25 + 1;
-
-    % =========================================================================
-    % ---------------------- Create figure for Plots GUI ----------------------
-
-    Plots       = figure('units','characters','position',[25 20 Window Windowht],...
-                         'name','Plots','numbertitle','off','toolbar','figure',... 'menubar','none'
-                         'color',[0.702 0.702 0.702],'resize','off');
-    % --- --- ---
-
-    Title       = uicontrol(Plots,'style','text','fontsize',titlefontsize,...
-                            'fontweight','bold','units','characters','position',...
-                            [0 Windowht-1-titleht Window 3],'string',{'OpenProp v3.3.4'});
-
-    % =========================================================================
-    % --------- Setup panels --------
-
-    Togglebar           = uibuttongroup('parent',Plots,'title','Figures and plots',...
-                                        'fontsize',panelfontsize,'fontweight','bold',...
-                                        'units','characters','position',[1 1 Togglebox...
-                                        Toggleboxht],'clipping','on','SelectionChangeFcn',...
-                                        @togglefn);
-
-    % ---
-    % 
-    % The panels defined from here on are set up using a (chronological) order
-    % criteria based on the different design stages, as presented in the following
-    % list:
-    % 
-    % Inputs:
-    % 1 Expanded Blade
-    % 2 Thickness profile
-    % 3 Inflow profile
-    % 
-    % Parametric:
-    % 4 Efficiency vs Diameter
-    % 5 Efficiency vs Rotational Speed (N)
-    % 
-    % 
-    % Design results:
-    % 
-    % 6 On Design Perf. (default)
-    % 
-    % 7 Circulation distribution
-    % 8 Induced Velocity
-    % 9 Beta & Beta i
-    % 
-    % 10 Expanded Blade (after)
-    % 11 t0/D vs Radius at control points
-    % 12 CL vs Radius at control points
-    % 
-    % 13 2D Geometry
-    % 14 3D Geometry
-    % 
-    % 15 Performance curves
-    % 
-    % ---
-
-
-    PlotPanels(1)       = uipanel('parent',Plots,'title','Expanded Blade (input blade)',  	'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','off');
-
-    PlotPanels(2)       = uipanel('parent',Plots,'title','Blade Thickness (input blade)', 	'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','off');
-
-    PlotPanels(3)       = uipanel('parent',Plots,'title','Inflow Profile',                	'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','off');
-
-    PlotPanels(4)       = uipanel('parent',Plots,'title','Efficiency vs Diameter',          'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','off');
-
-    PlotPanels(5)       = uipanel('parent',Plots,'title','Efficiency vs Rotation Speed',    'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','off');
-
-    PlotPanels(6)       = uipanel('parent',Plots,'title','On-design Performance',           'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','on');
-
-    PlotPanels(7)       = uipanel('parent',Plots,'title','Circulation Distribution',        'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','off');
-
-    PlotPanels(8)       = uipanel('parent',Plots,'title','Induced Velocity',                'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','off');
-
-    PlotPanels(9)       = uipanel('parent',Plots,'title','Inflow Angle',                    'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','off');
-
-    PlotPanels(10)       = uipanel('parent',Plots,'title','Expanded Blade (as designed)',   'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','off');
-
-    PlotPanels(11)       = uipanel('parent',Plots,'title','Blade Thickness (as designed)',  'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','off');
-
-    PlotPanels(12)       = uipanel('parent',Plots,'title','Lift Coefficient',               'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','off');
-
-    PlotPanels(13)       = uipanel('parent',Plots,'title','2D Geometry',                    'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','off');
-
-    PlotPanels(14)       = uipanel('parent',Plots,'title','3D Geometry',                    'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','off');
-
-    PlotPanels(15)       = uipanel('parent',Plots,'title','Performance Curves',             'fontsize',panelfontsize,'fontweight','bold','units','characters','position',[1+Togglebox 1 Displaybox Displayboxht],'clipping','on','visible','off');
-
-    % ---------------------------------------------------------------------
-    
-    % =========================================================================
-    % ------------------------ Togglebar Panel Elements -----------------------
-
-    ToggleText(1)	= uicontrol(Togglebar,'units','characters','style',...
-                                'text','string','From Inputs:','position',[1 Toggleboxht-2-pushht textbox textht]);
-
-    Toggle(1)       = uicontrol(Togglebar,'units','characters','style',...
-                                'togglebutton','string','Expanded Blade','position',[1 Toggleboxht-2-pushht*2 textbox pushht]);
-
-    Toggle(2)       = uicontrol(Togglebar,'units','characters','style',...
-                                'togglebutton','string','Blade Thickness','position',[1 Toggleboxht-2-pushht*3 textbox pushht]);
-
-    Toggle(3)       = uicontrol(Togglebar,'units','characters','style',...
-                                'togglebutton','string','Inflow Profile','position',[1 Toggleboxht-2-pushht*4 textbox pushht]);
-
-    ToggleText(2)	= uicontrol(Togglebar,'units','characters','style',...
-                                'text','string','Parametric:','position',[1 Toggleboxht-2-pushht*5 textbox textht]);
-
-    Toggle(4)       = uicontrol(Togglebar,'units','characters','style',...
-                                'togglebutton','string','Effy vs D','position',[1 Toggleboxht-2-pushht*6 textbox pushht]);
-
-    Toggle(5)       = uicontrol(Togglebar,'units','characters','style',...
-                                'togglebutton','string','Effy vs N','position',[1 Toggleboxht-2-pushht*7 textbox pushht]);
-
-    ToggleText(3)	= uicontrol(Togglebar,'units','characters','style',...
-                                'text','string','Design results:','position',[1 Toggleboxht-2-pushht*8 textbox textht]);
-
-    Toggle(6)       = uicontrol(Togglebar,'units','characters','style',...
-                                'togglebutton','string','Design Performance','position',[1 Toggleboxht-2-pushht*9 textbox pushht],'value',1);
-
-    Toggle(7)       = uicontrol(Togglebar,'units','characters','style',...
-                                'togglebutton','string','Circulation Distribution','position',[1 Toggleboxht-2-pushht*10 textbox pushht]);
-
-    Toggle(8)       = uicontrol(Togglebar,'units','characters','style',...
-                                'togglebutton','string','Induced Velocity','position',[1 Toggleboxht-2-pushht*11 textbox pushht]);
-
-    Toggle(9)       = uicontrol(Togglebar,'units','characters','style',...
-                                'togglebutton','string','Inflow Angle','position',[1 Toggleboxht-2-pushht*12 textbox pushht]);
-
-    Toggle(10)       = uicontrol(Togglebar,'units','characters','style',...
-                                'togglebutton','string','Expanded Blade','position',[1 Toggleboxht-2-pushht*13 textbox pushht]);
-
-    Toggle(11)       = uicontrol(Togglebar,'units','characters','style',...
-                                'togglebutton','string','Blade Thickness','position',[1 Toggleboxht-2-pushht*14 textbox pushht]);
-
-    Toggle(12)       = uicontrol(Togglebar,'units','characters','style',...
-                                'togglebutton','string','Lift Coefficient','position',[1 Toggleboxht-2-pushht*15 textbox pushht]);
-
-    Toggle(13)       = uicontrol(Togglebar,'units','characters','style',...
-                                'togglebutton','string','2D Geometry','position',[1 Toggleboxht-2-pushht*16 textbox pushht]);
-
-    Toggle(14)       = uicontrol(Togglebar,'units','characters','style',...
-                                'togglebutton','string','3D Geometry','position',[1 Toggleboxht-2-pushht*17 textbox pushht]);
-
-    Toggle(15)       = uicontrol(Togglebar,'units','characters','style',...
-                                'togglebutton','string','Performance Curves','position',[1 Toggleboxht-2-pushht*18 textbox pushht]);
-
-    % ---------------------------------------------------------------------
-    
-    
-    % =========================================================================
-    % ------------------ On Design Performance Panel Elements -----------------
-
-    ODtextsrc           = {'J =' 'KT =' 'KQ =' 'EFFY =' 'ADEFFY =' 'CT =' 'CQ =' 'CP ='};
-
-    for index = 1 : length(ODtextsrc)
-
-        OnDesignText(index)     = uicontrol(PlotPanels(6),'units','characters','style',...
-                                'text','string',ODtextsrc(index),'position',...
-                                [2 Displayboxht-4-pushht*index*1.25 ondesignbox textht],...
-                                'horizontalalignment','left');
-
-        OnDesignValues(index)	= uicontrol(PlotPanels(6),'units','characters','style',...
-                                'edit','string','','position',...
-                                [2+ondesignbox Displayboxht-4-pushht*index*1.25 editbox editboxht],...
-                                'enable','off');
-
-    end
-
-
-    % Create a subpanel to group those values that may be converted between SI and English
-
-    ConversionPanel     = uibuttongroup(PlotPanels(6),'units','characters','position',...
-                                        [2+ondesignbox+editbox+6 Displayboxht-4-1-pushht*8*1.25...
-                                        Conversionbox Conversionboxht],'clipping','on',...
-                                        'SelectionChangeFcn',@convertfn);
-
-    systemToggle(1)     = uicontrol(ConversionPanel,'style','radiobutton','units','characters',...
-                                    'position',[2 Conversionboxht-2.5 editbox textht],...
-                                    'string','SI','horizontalalignment','left','enable','off');
-
-    systemToggle(2)     = uicontrol(ConversionPanel,'style','radiobutton','units','characters',...
-                                    'position',[2+editbox Conversionboxht-2.5 editbox textht],...
-                                    'string','English','horizontalalignment','left','enable','off');
-
-
-    Conversiontextsrc   = {'Ship speed (Vs) =' 'Rotation speed (N) =' 'Diameter (D) ='...
-                           'Thrust (T) =' 'Torque (Q) =' 'Power (P) ='};
-
-    unitssrc            = {'m/s' 'RPM' 'm' 'N' 'Nm' 'W'};
-
-    for index = 1 : length(Conversiontextsrc)
-
-        ConversionText(index)	= uicontrol(ConversionPanel,'units','characters','style',...
-                                'text','string',Conversiontextsrc(index),'position',...
-                                [2 Conversionboxht-2.5-pushht*(index)*1.25 textbox textht],...
-                                'horizontalalignment','left');
-
-        ConversionValues(index)	= uicontrol(ConversionPanel,'units','characters','style',...
-                                'edit','string','','position',...
-                                [2+textbox Conversionboxht-2.5-pushht*(index)*1.25 ondesignbox editboxht],...
-                                'enable','off');
-
-        UnitsText(index)	= uicontrol(ConversionPanel,'units','characters','style',...
-                                'text','string',unitssrc(index),'position',...
-                                [2+textbox+ondesignbox+1 Conversionboxht-2.5-pushht*(index)*1.25 editbox textht],...
-                                'horizontalalignment','left');
-
-
-
-    end
-
-
-end
 % =========================================================================
 % =========================================================================
 % =========================================================================
-%%
-% =========================================================================
-% =========================================================================
-% =========================================================================
-function togglefn(hObject,ED)
 
-    global PlotPanels Toggle;
-
-    for index = 1 : length(Toggle)
-
-        if get(Toggle(index),'value')
-            set(PlotPanels(index),'visible','on');
-        else
-            set(PlotPanels(index),'visible','off');
-        end
-    end
-
-end
-% =========================================================================
-% =========================================================================
-% =========================================================================
-%%
-% =========================================================================
-% =========================================================================
-% =========================================================================
-function convertfn(hObject,ED)
-
-    global systemToggle ConversionValues UnitsText;
-
-    global pt;
-
-    if get(systemToggle(1),'value')
-
-        set(ConversionValues(1),'string',num2str(pt.input.Vs));
-        set(ConversionValues(2),'string',num2str(pt.input.N));
-        set(ConversionValues(3),'string',num2str(pt.input.D));
-        set(ConversionValues(4),'string',num2str(pt.input.THRUST));
-        set(ConversionValues(5),'string',num2str(pt.design.Q));
-        set(ConversionValues(6),'string',num2str(pt.design.P));
-
-        unitssrc            = {'m/s' 'RPM' 'm' 'N' 'Nm' 'W'};
-
-        for index = 1 : length(unitssrc)
-
-            set(UnitsText(index),'string',unitssrc(index));
-
-        end
-
-    else
-
-        set(ConversionValues(1),'string',num2str(pt.input.Vs*1.94384449));     % Convert to knots
-        set(ConversionValues(2),'string',num2str(pt.input.N));
-        set(ConversionValues(3),'string',num2str(pt.input.D*3.2808399));       % Convert to feet
-        set(ConversionValues(4),'string',num2str(pt.input.THRUST*0.224808943));     % Convert to lbf
-        set(ConversionValues(5),'string',num2str(pt.design.Q*0.737562149277));  % Convert to lb ft
-        set(ConversionValues(6),'string',num2str(pt.design.P*0.00134102209));   % Convert to Hp
-
-        unitssrc            = {'knots' 'RPM' 'ft' 'lb' 'lb/ft' 'HP'};
-
-        for index = 1 : length(unitssrc)
-
-            set(UnitsText(index),'string',unitssrc(index));
-
-        end
-
-    end
-
-end
 % =========================================================================
 % =========================================================================
 % =========================================================================
@@ -2298,7 +2209,7 @@ function Selectfn(hObject,ED)
 
     global OpenPropDirectory SpecificationsValues DuctValues FlagValues FoilValues Filename...
         XR_in XCoD_in XCD_in VAI_in VTI_in ri_in Xt0oD_in skew0_in rake0_in...
-        Meanline_cell Thickness_cell XCoD_values XCLmax_values; % CavValues 
+        Meanline_cell Thickness_cell XCoD_values XCLmax_values; % CavValues
 
     if get(Select,'value')==1
         % Do nothing - already in Single Design
@@ -2327,14 +2238,14 @@ function Selectfn(hObject,ED)
 
          Propeller_flag = get(FlagValues(1),'value');               % 0 == turbine, 1 == propeller
                Hub_flag = get(FlagValues(3),'value');                   % 0 == no hub, 1 == hub
-              Duct_flag = get(FlagValues(4),'value');                   % 0 == no duct, 1 == duct  
+              Duct_flag = get(FlagValues(4),'value');                   % 0 == no duct, 1 == duct
              Chord_flag	= get(FlagValues(5),'value');                   % ** CHORD OPTIMIZATION FLAG **
            Viscous_flag = get(FlagValues(6),'value');               % 0 == viscous forces off (CD = 0), 1 == viscous forces on
               Plot_flag = get(FlagValues(7),'value');               % 0 == do not display plots, 1 == display plots
 
         Make2Dplot_flag = get(FlagValues(8),'value');               % 0 == do not make a 2D plot of the results, 1 == make plot
         Make3Dplot_flag = get(FlagValues(8),'value');               % 0 == do not make a 3D plot of the results, 1 == make plot
-           Analyze_flag = get(FlagValues(9),'value'); 
+           Analyze_flag = get(FlagValues(9),'value');
 
 
         Meanline_index  	= get(FoilValues(1),'value');

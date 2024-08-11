@@ -68,7 +68,7 @@ function OpenPropParam
 
 clear all;
 
-addpath ../SourceCode
+#addpath("../SourceCode")
 
 
 %%
@@ -318,7 +318,7 @@ Inflow          = uipanel('parent',Param_Main,'title','Inflow Profile Values','f
 Flags           = uibuttongroup('parent',Param_Main,'title','Options','fontsize',...
                       panelfontsize,'fontweight','bold','units','characters',...
                       'position',[1+Specificationsbox+BladeDesignbox+Inflowbox...
-                      1+Toolboxht Flagbox Flagboxht],'clipping','on','SelectionChangeFcn',@checkTurbine);
+                      1+Toolboxht Flagbox Flagboxht],'clipping','on','selectionchangedfcn',@checkTurbine);
 
 Tools           = uipanel('parent',Param_Main,'title','Tools','fontsize',...
                       panelfontsize,'fontweight','bold','units','characters',...
@@ -667,18 +667,18 @@ while ~isempty(rest)
             % you are in /OpenPropDirectory/
             mkdir(['./',filename])
                cd(['./',filename])
-               addpath ../SourceCode
+               #addpath("../SourceCode")
                
         elseif strcmp(rest(2:end),filename)
             % already in /OpenPropDirectory/filename/
-            addpath ../SourceCode
+            #addpath("../SourceCode")
             rest = [];
             
         elseif strcmp(rest(2:end),'SourceCode')
             
             mkdir(['../',filename])
                cd(['../',filename])
-               addpath ../SourceCode
+               #addpath("../SourceCode")
             rest = [];
             
         else
@@ -969,7 +969,7 @@ while ~isempty(rest)
             % already in /OpenPropDirectory/filename/
             rest = [];
             
-            addpath ../SourceCode
+            #addpath("../SourceCode")
             
         elseif strcmp(rest(2:end),'SourceCode')
             
@@ -977,7 +977,7 @@ while ~isempty(rest)
                cd(['../',filename])
             rest = [];
             
-            addpath ../SourceCode
+            #addpath("../SourceCode")
             
         elseif isempty(rest)
             
@@ -985,7 +985,7 @@ while ~isempty(rest)
             mkdir(['./',filename])
                cd(['./',filename])
                
-            addpath ../SourceCode
+            #addpath("../SourceCode")
                
         else
             % you are in /OpenPropDirectory/wrongfolder
@@ -1097,18 +1097,21 @@ end
 if     strcmp(CurrentDirectory,OpenPropDirectory)    % OpenPropDirectory == 'OpenProp_v3.3.4';
     
     % stay in /OpenPropDirectory/
-    uiload;
+    %uiload;
+    uigetfile;
     cd(['./',filename])
     
 elseif strcmp(CurrentDirectory,'SourceCode')
     
     cd('../')
-    uiload;
+    %uiload;
+    uigetfile;
     cd(['./',filename])
         
 else
     % already in /OpenPropDirectory/filename
-    uiload;
+    %uiload;
+    uigetfile;
 end
 % -------------------------------------------------------------------------
 
@@ -1119,7 +1122,8 @@ end
 % % --- Change directory to Saved Files folder to load, then change back ---
 % 
 % cd('../OpenProp_saved_files/');
-% uiload;
+% %uiload;
+    uigetfile;
 % cd('../SourceCode/');
 
 % ------------------------------------------------------------------------
@@ -1417,16 +1421,16 @@ while ~isempty(rest)
         if isempty(rest)
             
             % you are in /OpenPropDirectory/
-            %             addpath ../SourceCode
+            %             #addpath("../SourceCode")
             
         elseif strcmp(rest(2:end),filename)
             % already in /OpenPropDirectory/filename/
-            %             addpath ../SourceCode
+            %             #addpath("../SourceCode")
             rest = [];
             
         elseif strcmp(rest(2:end),'SourceCode')
             
-            %             addpath ../SourceCode
+            %             #addpath("../SourceCode")
             rest = [];
             
         else
